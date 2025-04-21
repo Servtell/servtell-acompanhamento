@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acompanhe seu Conserto | Servtell</title>
+  <style>
+    body {
+      background-color: #0e1b2c;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #ff9800;
+    }
+    form {
+      margin-top: 20px;
+      background-color: #1c2a3a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    input[type="text"] {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 250px;
+    }
+    button {
+      margin-left: 10px;
+      background-color: #ff9800;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .resultado {
+      margin-top: 30px;
+      background-color: #263445;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+      width: 100%;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Acompanhe seu Conserto</h1>
+  <p>Digite o código recebido para saber o status do seu aparelho:</p>
+  <form id="formConsulta">
+    <input type="text" id="codigo" placeholder="Ex: ST123456" required>
+    <button type="submit">Verificar Status</button>
+  </form>
+  <div class="resultado" id="resultado">
+    <h2>Status Atual: <span id="status">Em análise</span></h2>
+    <p><strong>Modelo:</strong> iPhone 11</p>
+    <p><strong>Problema identificado:</strong> Conector de carga com oxidação</p>
+    <p><strong>Previsão de entrega:</strong> 25/04/2025</p>
+    <p><strong>Observações:</strong> Aguardando peça de reposição</p>
+  </div>
+  <script>
+    document.getElementById("formConsulta").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const resultado = document.getElementById("resultado");
+      resultado.style.display = "block";
+    });
+  </script>
+</body>
+</html>
