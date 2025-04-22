@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Cadastro | Servtell</title>
+  <style>
+    body {
+      background-color: #0e1b2c;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #ff9800;
+      text-align: center;
+    }
+    form {
+      background-color: #1c2a3a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    button {
+      background-color: #ff9800;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .mensagem {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .sucesso {
+      background-color: #4caf50;
+    }
+    .erro {
+      background-color: #f44336;
+    }
+  </style>
+</head>
+<body>
+  <h1>Painel de Cadastro de Conserto</h1>
+  <form id="formCadastro">
+    <label for="codigo">Código do Serviço</label>
+    <input type="text" id="codigo" required>
+
+    <label for="modelo">Modelo do Aparelho</label>
+    <input type="text" id="modelo" required>
+
+    <label for="problema">Problema Identificado</label>
+    <textarea id="problema" required></textarea>
+
+    <label for="status">Status Atual</label>
+    <input type="text" id="status" required>
+
+    <label for="previsao">Previsão de Entrega</label>
+    <input type="date" id="previsao" required>
+
+    <label for="observacoes">Observações</label>
+    <textarea id="observacoes"></textarea>
+
+    <button type="submit">Cadastrar Serviço</button>
+  </form>
+  <div class="mensagem" id="mensagem"></div>
+
+  <script>
+    document.getElementById("formCadastro").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const dados = {
+        codigo: document.getElementById("codigo").value,
+        modelo: document.getElementById("modelo").value,
+        problema: document.getElementById("problema").value,
+        status: document.getElementById("status").value,
+        previsao: document.getElementById("previsao").value,
+        observacoes: document.getElementById("observacoes").value
+      };
+
+      const resposta = await fetch("https://servtell-backend.vercel.app/cadastro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dados)
+      });
+
+      const mensagemEl = document.getElementById("mensagem");
+      if (resposta.ok) {
+        mensagemEl.textContent = "Serviço cadastrado com sucesso!";
+        mensagemEl.className = "mensagem sucesso";
+        mensagemEl.style.display = "block";
+        document.getElementById("formCadastro").reset();
+      } else {
+        const erro = await resposta.json();
+        mensagemEl.textContent = erro.error || "Erro ao cadastrar serviço.";
+        mensagemEl.className = "mensagem erro";
+        mensagemEl.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
